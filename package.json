@@ -1,0 +1,29 @@
+{
+  "name": "x-play",
+  "version": "0.0.1",
+  "description": ":musical_score: :notes: :musical_note: :musical_keyboard: :violin: :saxophone: :trumpet: :guitar:",
+  "main": "index.html",
+  "dependencies": {
+    "bower": "^1.7.9",
+    "http-server": "^0.9.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "npm install && bower install && http-server",
+    "deploy": "./deploy.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hikarock/x-play.git"
+  },
+  "keywords": [
+    "polymer",
+    "web-components"
+  ],
+  "author": "hikarock <i@hika69.com> (http://hika69.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hikarock/x-play/issues"
+  },
+  "homepage": "https://github.com/hikarock/x-play#readme"
+}
