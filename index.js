@@ -4,13 +4,26 @@ window.Polymer = {
 };
 
 (function() {
-  if ('registerElement' in document
-      && 'import' in document.createElement('link')
-      && 'content' in document.createElement('template')) {
+  var onload = function() {
+    if (!window.HTMLImports) {
+      document.dispatchEvent(
+        new CustomEvent('WebComponentsReady', {bubbles: true})
+      );
+    }
+  };
+  var webComponentsSupported = (
+    'registerElement' in document
+    && 'import' in document.createElement('link')
+    && 'content' in document.createElement('template')
+  );
+  if (!webComponentsSupported) {
+    var script = document.createElement('script');
+    script.async = true;
+    script.src = '/bower_components/webcomponentsjs/webcomponents-lite.min.js';
+    script.onload = onload;
+    document.head.appendChild(script);
   } else {
-    var e = document.createElement('script');
-    e.src = '/bower_components/webcomponentsjs/webcomponents-lite.min.js';
-    document.body.appendChild(e);
+    onload();
   }
 })();
 

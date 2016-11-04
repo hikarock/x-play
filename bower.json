@@ -24,7 +24,7 @@
     "lodash": "^3.7.0",
     "chai": "^3.2.0",
     "mocha": "^2.3.0",
-    "polymer": "polymer/polymer#^1.4.0",
+    "polymer": "polymer/polymer#^1.7.0",
     "sinon-chai": "^2.7.0",
     "sinonjs": "^1.14.1",
     "stacky": "^1.3.0",
