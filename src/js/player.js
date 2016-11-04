@@ -5,12 +5,12 @@ function Player(polymer, context) {
 
   this.props = {
     sounds: {
-      cymbal: '/src/sounds/cymbal.wav',
-      hihat:  '/src/sounds/hihat.wav',
-      kick:   '/src/sounds/kick.wav',
-      piano:  '/src/sounds/piano.wav',
-      snare:  '/src/sounds/snare.wav',
-      tom:    '/src/sounds/tom.wav'
+      cymbal: './src/sounds/cymbal.wav',
+      hihat:  './src/sounds/hihat.wav',
+      kick:   './src/sounds/kick.wav',
+      piano:  './src/sounds/piano.wav',
+      snare:  './src/sounds/snare.wav',
+      tom:    './src/sounds/tom.wav'
     },
     durations: {
       w: 1,
