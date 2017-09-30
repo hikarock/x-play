@@ -64,7 +64,7 @@ Player.prototype.validate = function() {
 
     code = this.props.melody[i].toLowerCase();
 
-    if (_.indexOf(this.props.rests, code) !== -1) {
+    if (this.props.rests.indexOf(code) !== -1) {
       continue;
     }
 
@@ -74,13 +74,13 @@ Player.prototype.validate = function() {
     octave   = tmp[1] ? tmp[1] : false;
     duration = tmp[2] ? tmp[2] : false;
 
-    if (!_.has(this.props.scales, scale)) {
+    if (!this.props.scales.hasOwnProperty(scale)) {
       throw new Error('scale error: ' + scale);
     }
     if (!octave.match(/[0-9+]/)) {
       throw new Error('octave error: ' + octave);
     }
-    if (duration && !_.has(this.props.durations, duration)) {
+    if (duration && !this.props.durations.hasOwnProperty(duration)) {
       throw new Error('duration error: ' + duration);
     }
   }
