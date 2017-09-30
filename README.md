@@ -44,7 +44,7 @@ Drum
 ## Props
 
 - melody (require)
-  - `scale[octave][duration]`
+  - `scale[octave]`
 - sound (default: "piano")
   - "cymbal"
   - "hihat"

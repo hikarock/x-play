@@ -12,16 +12,6 @@ function Player(polymer, context) {
       snare:  './src/sounds/snare.wav',
       tom:    './src/sounds/tom.wav'
     },
-    durations: {
-      w: 1,
-      h: 2,
-      q: 4,
-      e: 8,
-      s: 16,
-      t: 32,
-      x: 64,
-      o: 128
-    },
     scales: {
       'c':  0.262,
       'c#': 0.277,
@@ -58,7 +48,7 @@ Player.prototype.validate = function() {
     throw new error('melody is required');
   }
 
-  var code, scale, octave, duration, tmp, i, max;
+  var code, scale, octave, tmp, i, max;
 
   for (i = 0, max = this.props.melody.length; i < max; i++) {
 
@@ -72,16 +62,12 @@ Player.prototype.validate = function() {
 
     scale    = tmp[0] ? tmp[0] : false;
     octave   = tmp[1] ? tmp[1] : false;
-    duration = tmp[2] ? tmp[2] : false;
 
     if (!this.props.scales.hasOwnProperty(scale)) {
       throw new Error('scale error: ' + scale);
     }
     if (!octave.match(/[0-9+]/)) {
       throw new Error('octave error: ' + octave);
-    }
-    if (duration && !this.props.durations.hasOwnProperty(duration)) {
-      throw new Error('duration error: ' + duration);
     }
   }
   if (!(this.props.sound in this.props.sounds)) {
@@ -97,7 +83,7 @@ Player.prototype.validate = function() {
 
 Player.prototype.play = function(buffer, time, bpm, code) {
 
-  var octave, scale, duration, tmp, source;
+  var octave, scale, tmp, source;
 
   source = this.context.createBufferSource();
   source.buffer = buffer;
@@ -107,7 +93,6 @@ Player.prototype.play = function(buffer, time, bpm, code) {
 
   scale    = tmp[0];
   octave   = tmp[1];
-  duration = tmp[2] ? this.props.durations[tmp[2]] : 1;
 
   source.playbackRate.value = this.props.scales[scale] * octave;
   source.start(time);
