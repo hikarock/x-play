@@ -10,8 +10,8 @@ function BufferLoader(context, urlList, callback) {
 BufferLoader.prototype.loadBuffer = function(url, index) {
 
   var request = new XMLHttpRequest();
-  request.open("GET", url, true);
-  request.responseType = "arraybuffer";
+  request.open('GET', url, true);
+  request.responseType = 'arraybuffer';
 
   var loader = this;
 
