@@ -2,14 +2,14 @@
   "name": "x-play",
   "main": "x-play.html",
   "dependencies": {
-    "polymer": "Polymer/polymer#^2.0.0"
+    "polymer": "Polymer/polymer#^2.1.1"
   },
   "devDependencies": {
     "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^2.0.0",
-    "web-component-tester": "Polymer/web-component-tester#^6.0.0",
-    "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0"
+    "web-component-tester": "Polymer/web-component-tester#^6.2.0",
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.14"
   },
   "resolutions": {
-    "polymer": "^2.0.0"
+    "polymer": "^2.1.1"
   }
 }
