@@ -1,0 +1,66 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+
+<dom-module id="x-play">
+  <template></template>
+
+  <script src="./src/js/buffer.js"></script>
+  <script src="./src/js/player.js"></script>
+  <script>
+    /**
+     * `x-play`
+     * 
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class XPlay extends Polymer.Element {
+      static get is() { return 'x-play'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'x-play'
+          }
+        };
+      }
+      constructor() {
+        super();
+        window.AudioContext = window.AudioContext || window.webkitAudioContext;
+        const context = new AudioContext();
+        const player  = new Player(this, context);
+
+        try {
+          player.validate();
+        } catch(e) {
+          console.error(e);
+          return;
+        }
+
+        const bufferLoader = new BufferLoader(context, player.props.sounds, function(bufferList) {
+
+          const bpm = 60 / player.props.tempo;
+          const sound = player.props.sound;
+
+          let code, time, startTime;
+          time = startTime = context.currentTime;
+
+          for (let i = 0, iMax = player.props.repeat; i < iMax; i++) {
+            for (let j = 0, jMax = player.props.melody.length; j < jMax; j++) {
+              time = startTime + (j * bpm);
+              code = player.props.melody[j];
+              if (player.props.rests.indexOf(code) === -1) {
+                player.play(bufferList[sound], time, bpm, code);
+              }
+            }
+            startTime = time + bpm;
+          }
+        });
+
+        bufferLoader.load();
+      }
+    }
+
+    window.customElements.define(XPlay.is, XPlay);
+  </script>
+</dom-module>

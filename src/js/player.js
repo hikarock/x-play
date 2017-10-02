@@ -5,12 +5,12 @@ function Player(polymer, context) {
 
   this.props = {
     sounds: {
-      cymbal: './src/sounds/cymbal.wav',
-      hihat:  './src/sounds/hihat.wav',
-      kick:   './src/sounds/kick.wav',
-      piano:  './src/sounds/piano.wav',
-      snare:  './src/sounds/snare.wav',
-      tom:    './src/sounds/tom.wav'
+      cymbal: '../src/sounds/cymbal.wav',
+      hihat:  '../src/sounds/hihat.wav',
+      kick:   '../src/sounds/kick.wav',
+      piano:  '../src/sounds/piano.wav',
+      snare:  '../src/sounds/snare.wav',
+      tom:    '../src/sounds/tom.wav'
     },
     scales: {
       'c':  0.262,
@@ -29,16 +29,17 @@ function Player(polymer, context) {
     rests: ['r', '-']
   };
 
-  var melody = polymer.getAttribute('melody');
-  melody = melody.replace(/\||\r|\n|\r\n/g, '').trim();
-  this.props.melody = melody.split(/\s+/);
+  this.props.melody = polymer.getAttribute('melody')
+                             .replace(/\||\r|\n|\r\n/g, '')
+                             .trim()
+                             .split(/\s+/);
 
   this.props.sound = polymer.getAttribute('sound') || 'piano';
 
-  var repeat = polymer.getAttribute('repeat') || 1;
+  const repeat = polymer.getAttribute('repeat') || 1;
   this.props.repeat = parseInt(repeat, 10);
 
-  var tempo = polymer.getAttribute('tempo')  || 100;
+  const tempo = polymer.getAttribute('tempo')  || 100;
   this.props.tempo = parseInt(tempo, 10);
 }
 
@@ -48,9 +49,9 @@ Player.prototype.validate = function() {
     throw new error('melody is required');
   }
 
-  var code, scale, octave, tmp, i, max;
+  let code, scale, octave, tmp;
 
-  for (i = 0, max = this.props.melody.length; i < max; i++) {
+  for (let i = 0, max = this.props.melody.length; i < max; i++) {
 
     code = this.props.melody[i].toLowerCase();
 
@@ -60,8 +61,8 @@ Player.prototype.validate = function() {
 
     tmp = code.split(/([0-9]+)/);
 
-    scale    = tmp[0] ? tmp[0] : false;
-    octave   = tmp[1] ? tmp[1] : false;
+    scale  = tmp[0] ? tmp[0] : false;
+    octave = tmp[1] ? tmp[1] : false;
 
     if (!this.props.scales.hasOwnProperty(scale)) {
       throw new Error('scale error: ' + scale);
@@ -83,16 +84,14 @@ Player.prototype.validate = function() {
 
 Player.prototype.play = function(buffer, time, bpm, code) {
 
-  var octave, scale, tmp, source;
-
-  source = this.context.createBufferSource();
+  const source = this.context.createBufferSource();
   source.buffer = buffer;
   source.connect(this.context.destination);
 
-  tmp = code.toLowerCase().split(/([0-9]+)/);
+  const tmp = code.toLowerCase().split(/([0-9]+)/);
 
-  scale    = tmp[0];
-  octave   = tmp[1];
+  const scale  = tmp[0];
+  const octave = tmp[1];
 
   source.playbackRate.value = this.props.scales[scale] * octave;
   source.start(time);
