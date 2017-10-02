@@ -1,7 +1,12 @@
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 
 <dom-module id="x-play">
-  <template></template>
+  <template>
+    <style>
+    </style>
+    <button id="play" on-click="handlePlayClick">Play</button>
+    <button id="pause" on-click="handlePauseClick">Pause</button>
+  </template>
 
   <script src="./src/js/buffer.js"></script>
   <script src="./src/js/player.js"></script>
@@ -24,40 +29,58 @@
           }
         };
       }
+
       constructor() {
         super();
+
         window.AudioContext = window.AudioContext || window.webkitAudioContext;
-        const context = new AudioContext();
-        const player  = new Player(this, context);
+
+        this.context = new AudioContext();
+        this.player  = new Player(this, this.context);
 
         try {
-          player.validate();
+          this.player.validate();
         } catch(e) {
           console.error(e);
           return;
         }
+      }
 
-        const bufferLoader = new BufferLoader(context, player.props.sounds, function(bufferList) {
+      handlePlayClick() {
+        this.play();
+      }
 
-          const bpm = 60 / player.props.tempo;
-          const sound = player.props.sound;
+      handlePauseClick() {
+        this.pause();
+      }
+
+      play() {
+
+        this.bufferLoader = new BufferLoader(this.context, this.player.props.sounds, (bufferList) => {
+
+          const bpm = 60 / this.player.props.tempo;
+          const sound = this.player.props.sound;
 
           let code, time, startTime;
-          time = startTime = context.currentTime;
+          time = startTime = this.context.currentTime;
 
-          for (let i = 0, iMax = player.props.repeat; i < iMax; i++) {
-            for (let j = 0, jMax = player.props.melody.length; j < jMax; j++) {
+          for (let i = 0, iMax = this.player.props.repeat; i < iMax; i++) {
+            for (let j = 0, jMax = this.player.props.melody.length; j < jMax; j++) {
               time = startTime + (j * bpm);
-              code = player.props.melody[j];
-              if (player.props.rests.indexOf(code) === -1) {
-                player.play(bufferList[sound], time, bpm, code);
+              code = this.player.props.melody[j];
+              if (this.player.props.rests.indexOf(code) === -1) {
+                this.player.play(bufferList[sound], time, bpm, code);
               }
             }
             startTime = time + bpm;
           }
         });
 
-        bufferLoader.load();
+        this.bufferLoader.load();
+      }
+
+      pause() {
+
       }
     }
 
