@@ -3,9 +3,15 @@
 <dom-module id="x-play">
   <template>
     <style>
+      #play {
+        display: inline;
+      }
+      #stop {
+        display: none;
+      }
     </style>
     <button id="play" on-click="handlePlayClick">Play</button>
-    <button id="pause" on-click="handlePauseClick">Pause</button>
+    <button id="stop" on-click="handleStopClick">Stop</button>
   </template>
 
   <script src="./src/js/buffer.js"></script>
@@ -32,11 +38,38 @@
 
       constructor() {
         super();
+      }
 
+      handlePlayClick() {
+        this.toggleButton();
+        this.play();
+      }
+
+      handleStopClick() {
+        this.toggleButton();
+        this.stop();
+      }
+
+      toggleButton() {
+        const play = this.$.play;
+        if (this.$.play.style.display === 'none') {
+          this.$.play.style.display  = 'inline';
+          this.$.stop.style.display = 'none';
+        } else {
+          this.$.play.style.display  = 'none';
+          this.$.stop.style.display = 'inline';
+        }
+      }
+
+      createContext() {
         window.AudioContext = window.AudioContext || window.webkitAudioContext;
+        return new AudioContext();
+      }
 
-        this.context = new AudioContext();
-        this.player  = new Player(this, this.context);
+      play() {
+
+        const context = this.createContext();
+        this.player = new Player(this, context);
 
         try {
           this.player.validate();
@@ -44,25 +77,14 @@
           console.error(e);
           return;
         }
-      }
 
-      handlePlayClick() {
-        this.play();
-      }
-
-      handlePauseClick() {
-        this.pause();
-      }
-
-      play() {
-
-        this.bufferLoader = new BufferLoader(this.context, this.player.props.sounds, (bufferList) => {
+        this.bufferLoader = new BufferLoader(context, this.player.props.sounds, (bufferList) => {
 
           const bpm = 60 / this.player.props.tempo;
           const sound = this.player.props.sound;
 
           let code, time, startTime;
-          time = startTime = this.context.currentTime;
+          time = startTime = context.currentTime;
 
           for (let i = 0, iMax = this.player.props.repeat; i < iMax; i++) {
             for (let j = 0, jMax = this.player.props.melody.length; j < jMax; j++) {
@@ -79,8 +101,8 @@
         this.bufferLoader.load();
       }
 
-      pause() {
-
+      stop() {
+        this.player.stop();
       }
     }
 

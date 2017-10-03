@@ -2,6 +2,7 @@
 function Player(polymer, context) {
 
   this.context = context;
+  this.source = null;
 
   this.props = {
     sounds: {
@@ -84,15 +85,21 @@ Player.prototype.validate = function() {
 
 Player.prototype.play = function(buffer, time, bpm, code) {
 
-  const source = this.context.createBufferSource();
-  source.buffer = buffer;
-  source.connect(this.context.destination);
+  this.source = this.context.createBufferSource();
+  this.source.buffer = buffer;
+  this.source.connect(this.context.destination);
 
   const tmp = code.toLowerCase().split(/([0-9]+)/);
 
   const scale  = tmp[0];
   const octave = tmp[1];
 
-  source.playbackRate.value = this.props.scales[scale] * octave;
-  source.start(time);
+  this.source.playbackRate.value = this.props.scales[scale] * octave;
+  this.source.start(time);
+}
+
+Player.prototype.stop = function() {
+  this.context.close().then(function() {
+    console.log('close')
+  })
 }
