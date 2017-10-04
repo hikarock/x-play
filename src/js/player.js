@@ -98,8 +98,8 @@ Player.prototype.play = function(buffer, time, bpm, code) {
   this.source.start(time);
 }
 
-Player.prototype.stop = function() {
+Player.prototype.stop = function(callback) {
   this.context.close().then(function() {
-    console.log('close')
+    callback();
   })
 }

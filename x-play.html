@@ -46,7 +46,6 @@
       }
 
       handleStopClick() {
-        this.toggleButton();
         this.stop();
       }
 
@@ -102,7 +101,9 @@
       }
 
       stop() {
-        this.player.stop();
+        this.player.stop(() => {
+          this.toggleButton();
+        });
       }
     }
 
