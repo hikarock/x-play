@@ -29,15 +29,35 @@
       static get is() { return 'x-play'; }
       static get properties() {
         return {
-          prop1: {
+          formattedMelody: {
+            computed: 'melodyFormatter(melody)'
+          },
+          melody: {
+            type: String
+          },
+          sound: {
             type: String,
-            value: 'x-play'
+            value: 'piano'
+          },
+          repeat: {
+            type: Number,
+            value: 1
+          },
+          tempo: {
+            type: Number,
+            value: 100
           }
         };
       }
 
-      constructor() {
-        super();
+      melodyFormatter(melody) {
+        return melody.replace(/\||\r|\n|\r\n/g, '')
+                     .trim()
+                     .split(/\s+/);
+      }
+
+      connectedCallback() {
+        super.connectedCallback();
       }
 
       handlePlayClick() {
@@ -67,7 +87,12 @@
       play() {
 
         const context = this.createContext();
-        this.player = new Player(this, context);
+        this.player = new Player({
+          melody: this.formattedMelody,
+          sound: this.sound,
+          repeat: this.repeat,
+          tempo: this.tempo
+        }, context);
 
         try {
           this.player.validate();

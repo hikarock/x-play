@@ -1,5 +1,5 @@
 
-function Player(polymer, context) {
+function Player(xPlay, context) {
 
   this.context = context;
   this.source = null;
@@ -30,18 +30,10 @@ function Player(polymer, context) {
     rests: ['r', '-']
   };
 
-  this.props.melody = polymer.getAttribute('melody')
-                             .replace(/\||\r|\n|\r\n/g, '')
-                             .trim()
-                             .split(/\s+/);
-
-  this.props.sound = polymer.getAttribute('sound') || 'piano';
-
-  const repeat = polymer.getAttribute('repeat') || 1;
-  this.props.repeat = parseInt(repeat, 10);
-
-  const tempo = polymer.getAttribute('tempo')  || 100;
-  this.props.tempo = parseInt(tempo, 10);
+  this.props.melody = xPlay.melody;
+  this.props.sound  = xPlay.sound;
+  this.props.repeat = xPlay.repeat;
+  this.props.tempo  = xPlay.tempo;
 }
 
 Player.prototype.validate = function() {
