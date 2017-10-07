@@ -1,15 +1,14 @@
 {
   "name": "x-play",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": ":musical_score: :notes: :musical_note: :musical_keyboard: :violin: :saxophone: :trumpet: :guitar:",
   "main": "index.html",
   "dependencies": {
-    "bower": "^1.7.9",
-    "http-server": "^0.9.0"
+    "bower": "^1.8.2"
   },
   "devDependencies": {},
   "scripts": {
-    "start": "npm install && bower install && http-server",
+    "start": "npm install && bower install && polymer serve",
     "deploy": "./deploy.sh"
   },
   "repository": {
