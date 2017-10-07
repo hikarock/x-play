@@ -10,8 +10,8 @@
         display: none;
       }
     </style>
-    <button id="play" on-click="handlePlayClick">Play</button>
-    <button id="stop" on-click="handleStopClick">Stop</button>
+    <button id="play" on-click="__handlePlayClick">Play</button>
+    <button id="stop" on-click="__handleStopClick">Stop</button>
   </template>
 
   <script src="./src/js/buffer.js"></script>
@@ -60,16 +60,16 @@
         super.connectedCallback();
       }
 
-      handlePlayClick() {
-        this.toggleButton();
-        this.play();
+      __handlePlayClick() {
+        this.__toggleButton();
+        this.__play();
       }
 
-      handleStopClick() {
-        this.stop();
+      __handleStopClick() {
+        this.__stop();
       }
 
-      toggleButton() {
+      __toggleButton() {
         if (this.$.play.style.display === 'none') {
           this.$.play.style.display = 'inline';
           this.$.stop.style.display = 'none';
@@ -79,14 +79,14 @@
         }
       }
 
-      createContext() {
+      __createContext() {
         window.AudioContext = window.AudioContext || window.webkitAudioContext;
         return new AudioContext();
       }
 
-      play() {
+      __play() {
 
-        const context = this.createContext();
+        const context = this.__createContext();
         this.player = new Player({
           melody: this.formattedMelody,
           sound: this.sound,
@@ -124,9 +124,9 @@
         this.bufferLoader.load();
       }
 
-      stop() {
+      __stop() {
         this.player.stop(() => {
-          this.toggleButton();
+          this.__toggleButton();
         });
       }
     }
