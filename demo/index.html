@@ -22,12 +22,17 @@
       <h3>Basic x-play demo</h3>
       <demo-snippet>
         <template>
-          <x-play sound="piano" tempo="80" repeat="1" melody="d2 e2 c2 c1 g1"></x-play>
+          <x-play melody="d2 e2 c2 c1 g1"></x-play>
         </template>
       </demo-snippet>
       <demo-snippet>
         <template>
-          <x-play sound="piano" tempo="200" repeat="2" melody="
+          <x-play tempo="80" melody="d2 e2 c2 c1 g1"></x-play>
+        </template>
+      </demo-snippet>
+      <demo-snippet>
+        <template>
+          <x-play tempo="200" melody="
             | g3 e3 e3  - | f3 d3 d3  - | c3 d3 e3 f3 | g3 g3 g3  - |
             | g3 e3 e3 e3 | f3 d3 d3 d3 | c3 e3 g3 g3 | e3 e3 e3  - |
             | d3 d3 d3 d3 | d3 e3 f3  - | e3 e3 e3 e3 | e3 f3 g3  - |
