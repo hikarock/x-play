@@ -42,20 +42,17 @@ Player.prototype.validate = function() {
     throw new error('melody is required');
   }
 
-  let code, scale, octave, tmp;
-
   for (let i = 0, max = this.props.melody.length; i < max; i++) {
 
-    code = this.props.melody[i].toLowerCase();
+    const code = this.props.melody[i].toLowerCase();
 
     if (this.props.rests.indexOf(code) !== -1) {
       continue;
     }
 
-    tmp = code.split(/([0-9]+)/);
-
-    scale  = tmp[0] ? tmp[0] : false;
-    octave = tmp[1] ? tmp[1] : false;
+    const tmp = code.split(/([0-9]+)/);
+    const scale  = tmp[0] ? tmp[0] : false;
+    const octave = tmp[1] ? tmp[1] : false;
 
     if (!this.props.scales.hasOwnProperty(scale)) {
       throw new Error('scale error: ' + scale);
@@ -64,6 +61,7 @@ Player.prototype.validate = function() {
       throw new Error('octave error: ' + octave);
     }
   }
+
   if (!(this.props.sound in this.props.sounds)) {
     throw new Error('sound not found: ' + this.props.sound);
   }
