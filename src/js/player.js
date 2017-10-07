@@ -61,15 +61,8 @@ Player.prototype.validate = function() {
       throw new Error('octave error: ' + octave);
     }
   }
-
   if (!(this.props.sound in this.props.sounds)) {
     throw new Error('sound not found: ' + this.props.sound);
-  }
-  if (isNaN(this.props.repeat)) {
-    throw new Error('repeat is not number: ' + this.props.repeat);
-  }
-  if (isNaN(this.props.tempo)) {
-    throw new Error('tempo is not number: ' + this.props.tempo);
   }
 };
 
