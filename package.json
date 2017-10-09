@@ -8,8 +8,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start": "npm install && bower install && polymer serve",
-    "deploy": "./deploy.sh"
+    "start": "npm install && bower install && polymer serve --open"
   },
   "repository": {
     "type": "git",
