@@ -9,11 +9,11 @@ function BufferLoader(context, urlList, callback) {
 
 BufferLoader.prototype.loadBuffer = function(url, index) {
 
-  var request = new XMLHttpRequest();
+  const request = new XMLHttpRequest();
   request.open('GET', url, true);
   request.responseType = 'arraybuffer';
 
-  var loader = this;
+  const loader = this;
 
   request.onload = function() {
     loader.context.decodeAudioData(
@@ -23,12 +23,8 @@ BufferLoader.prototype.loadBuffer = function(url, index) {
           console.error('error decoding file data: ' + url);
           return;
         }
-        var len = 0;
-        for (var j in loader.urlList) {
-          len++;
-        }
         loader.bufferList[index] = buffer;
-        if (++loader.loadCount == len) {
+        if (++loader.loadCount == Object.keys(loader.urlList).length) {
           loader.onload(loader.bufferList);
         }
       },

@@ -1,4 +1,7 @@
 {
-  "entrypoint": "index.html",
-  "shell": "src/x-play.html"
+  "lint": {
+    "rules": [
+      "polymer-2"
+    ]
+  }
 }

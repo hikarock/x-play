@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>x-play demo</title>
+
+    <script src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+
+    <link rel="import" href="../../bower_components/iron-demo-helpers/demo-pages-shared-styles.html">
+    <link rel="import" href="../../bower_components/iron-demo-helpers/demo-snippet.html">
+    <link rel="import" href="../x-play.html">
+
+    <custom-style>
+      <style is="custom-style" include="demo-pages-shared-styles">
+      </style>
+    </custom-style>
+  </head>
+  <body>
+    <div class="vertical-section-container centered">
+      <h3>Basic x-play demo</h3>
+      <demo-snippet>
+        <template>
+          <x-play melody="d2 e2 c2 c1 g1"></x-play>
+        </template>
+      </demo-snippet>
+      <demo-snippet>
+        <template>
+          <x-play tempo="200" melody="
+            | g3 e3 e3  - | f3 d3 d3  - | c3 d3 e3 f3 | g3 g3 g3  - |
+            | g3 e3 e3 e3 | f3 d3 d3 d3 | c3 e3 g3 g3 | e3 e3 e3  - |
+            | d3 d3 d3 d3 | d3 e3 f3  - | e3 e3 e3 e3 | e3 f3 g3  - |
+            | g3 e3 e3 e3 | f3 d3 d3 d3 | c3 e3 g3 g3 | e3 e3 e3  - |
+          "></x-play>
+        </template>
+      </demo-snippet>
+      <demo-snippet>
+        <template>
+          <x-play sound="snare" tempo="100" repeat="2" melody="-  c4  - c4  - c4  - c4"></x-play>
+        </template>
+      </demo-snippet>
+      <demo-snippet>
+        <template>
+          <x-play sound="kick"  tempo="100" repeat="2" melody="c4 c4 c4 c4 c4 c4 c4 c4"></x-play>
+        </template>
+      </demo-snippet>
+  </body>
+</html>

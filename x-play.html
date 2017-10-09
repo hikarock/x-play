@@ -1,0 +1,136 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+
+<dom-module id="x-play">
+  <template>
+    <style>
+      #play {
+        display: inline;
+      }
+      #stop {
+        display: none;
+      }
+    </style>
+    <button id="play" on-click="__handlePlayClick">Play</button>
+    <button id="stop" on-click="__handleStopClick">Stop</button>
+  </template>
+
+  <script src="./src/js/buffer.js"></script>
+  <script src="./src/js/player.js"></script>
+  <script>
+    /**
+     * `x-play`
+     * 
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class XPlay extends Polymer.Element {
+      static get is() { return 'x-play'; }
+      static get properties() {
+        return {
+          formattedMelody: {
+            computed: 'melodyFormatter(melody)'
+          },
+          melody: {
+            type: String
+          },
+          sound: {
+            type: String,
+            value: 'piano'
+          },
+          repeat: {
+            type: Number,
+            value: 1
+          },
+          tempo: {
+            type: Number,
+            value: 100
+          }
+        };
+      }
+
+      melodyFormatter(melody) {
+        return melody.replace(/\||\r|\n|\r\n/g, '')
+                     .trim()
+                     .split(/\s+/);
+      }
+
+      connectedCallback() {
+        super.connectedCallback();
+      }
+
+      __handlePlayClick() {
+        this.__toggleButton();
+        this.__play();
+      }
+
+      __handleStopClick() {
+        this.__stop();
+      }
+
+      __toggleButton() {
+        if (this.$.play.style.display === 'none') {
+          this.$.play.style.display = 'inline';
+          this.$.stop.style.display = 'none';
+        } else {
+          this.$.play.style.display = 'none';
+          this.$.stop.style.display = 'inline';
+        }
+      }
+
+      __createContext() {
+        window.AudioContext = window.AudioContext || window.webkitAudioContext;
+        return new AudioContext();
+      }
+
+      __play() {
+
+        const context = this.__createContext();
+        this.player = new Player({
+          melody: this.formattedMelody,
+          sound: this.sound,
+          repeat: this.repeat,
+          tempo: this.tempo
+        }, context);
+
+        try {
+          this.player.validate();
+        } catch(e) {
+          console.error(e);
+          return;
+        }
+
+        this.bufferLoader = new BufferLoader(context, this.player.props.sounds, (bufferList) => {
+
+          const bpm = 60 / this.player.props.tempo;
+          const sound = this.player.props.sound;
+
+          let code, time, startTime;
+          time = startTime = context.currentTime;
+
+          for (let i = 0, iMax = this.player.props.repeat; i < iMax; i++) {
+            for (let j = 0, jMax = this.player.props.melody.length; j < jMax; j++) {
+              time = startTime + (j * bpm);
+              code = this.player.props.melody[j];
+              if (this.player.props.rests.indexOf(code) === -1) {
+                this.player.play(bufferList[sound], time, bpm, code);
+              }
+            }
+            startTime = time + bpm;
+          }
+        });
+
+        this.bufferLoader.load();
+      }
+
+      __stop() {
+        this.player.stop(() => {
+          this.__toggleButton();
+        });
+      }
+    }
+
+    window.customElements.define(XPlay.is, XPlay);
+  </script>
+</dom-module>
