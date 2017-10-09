@@ -4,7 +4,7 @@
 
 ## DEMO
 
-[x-play](https://hikarock.github.io/x-play/)
+[x-play](https://x-play.hika69.com/demo/)
 
 ## Get Started
 
